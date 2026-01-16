@@ -50,22 +50,23 @@ const themeLink = document.getElementById("themeStyle");
 let isLight = false;
 
 if (localStorage.getItem("theme") === "light") {
-  themeLink.href = "../assets/css/log.light.css";
+  themeLink.href = "assets/css/log.light.css";
   toggleBtn.textContent = "☀️";
   isLight = true;
 }
 
 toggleBtn.addEventListener("click", () => {
   if (isLight) {
-    themeLink.href = "../assets/css/log.css";
+    themeLink.href = "assets/css/log.css";
     toggleBtn.textContent = "🌙";
     localStorage.setItem("theme", "dark");
   } else {
-    themeLink.href = "../assets/css/log.light.css";
+    themeLink.href = "assets/css/log.light.css";
     toggleBtn.textContent = "☀️";
     localStorage.setItem("theme", "light");
   }
   isLight = !isLight;
 });
+
 
 
