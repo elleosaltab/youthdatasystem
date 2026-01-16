@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SK Registration Form</title>
+  <link id="themeStylesheet" rel="stylesheet" href="../assets/css/register.css">
+</head>
+<body>
+  <button id="themeToggle" class="theme-toggle">🌙</button>
+  <div class="register-box">
+    <h2>SK Registration Form</h2>
+    <form id="skRegisterForm" action="../auth/sk_register.php" method="POST" novalidate>
+      
+      <fieldset>
+        <legend>Personal Information</legend>
+        <label>First Name:</label>
+        <input type="text" name="first_name" required minlength="2" maxlength="50">
+        
+        <label>Last Name:</label>
+        <input type="text" name="last_name" required minlength="2" maxlength="50">
+        
+        <label>Middle Name:</label>
+        <input type="text" name="middle_name" maxlength="50">
+        
+        <label>Date of Birth:</label>
+        <input type="date" name="dob" required>
+        
+        <label>Gender:</label>
+        <input type="text" name="religion" required>
+      </fieldset>
+ 
+      <fieldset>
+        <legend>Barangay Details</legend>
+        <label>Municipality/City:</label>
+        <select name="municipality" id="municipality" required>
+          <option value="">Select Municipality</option>
+          <option value="Bagamanoc">Bagamanoc</option>
+          <option value="Baras">Baras</option>
+          <option value="Bato">Bato</option>
+          <option value="Caramoran">Caramoran</option>
+          <option value="Gigmoto">Gigmoto</option>
+          <option value="Pandan">Pandan</option>
+          <option value="Panganiban">Panganiban</option>
+          <option value="San Andres">San Andres</option>
+          <option value="San Miguel">San Miguel</option>
+          <option value="Viga">Viga</option>
+          <option value="Virac">Virac</option>
+        </select>
+ 
+        <label>Barangay:</label>
+        <select id="barangay" name="barangay" required>
+          <option value="">Select Barangay</option>
+        </select>
+
+        <label>Address:</label>
+        <input type="text" id="address" name="address" placeholder="Auto generated" readonly required>
+
+        <label>Position in SK:</label>
+        <select name="position" required>
+          <option value="">-- Select Position --</option>
+          <option>SK Chairperson</option>
+          <option>SK Secretary</option>
+        </select>
+      </fieldset>
+
+     
+      <fieldset>
+        <legend>Contact Information</legend>
+        <label>Contact Number (PH Format 09XXXXXXXXX):</label>
+        <input type="text" name="contact" pattern="^09\\d{9}$" required>
+        
+        <label>Email Address:</label>
+        <input type="email" name="email" required>
+        
+        <label>Confirm Email:</label>
+        <input type="email" name="confirm_email" required>
+      </fieldset>
+      
+  
+      <fieldset>
+        <legend>Account Security</legend>
+        <label>Password:</label>
+      <div class="passwordfield">
+        <input type="password" id="password" name="password" placeholder="Password" required>
+        <button type="button" class="btn" onclick="togglePassword('password', this)">Show</button>
+      </div>
+          
+      <label>Confirm Password:</label>
+      <div class="passwordfield">
+        <input type="password" id="confirm" name="confirm_password" placeholder="Confirm Password" required>
+        <button type="button" class="btn" onclick="togglePassword('confirm', this)">Show</button>
+      </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Authorization of Office</legend>
+        <label>Upload Auth of Office (PDF/Image):</label>
+        <input type="file" name="auth_file" accept=".pdf,.jpg,.jpeg,.png" required>
+        <small style="color:gray;">Accepted formats: PDF, JPG, PNG | Max size: 5MB</small>
+      </fieldset>
+
+      <fieldset>
+        <label>
+          <input type="checkbox" name="agree" required>
+          I confirm that the above information is true and correct.
+        </label>
+      </fieldset>
+      
+      <button type="submit" class="register-btn">Register</button>
+    </form>
+    
+    <div class="login-link">
+      Already have an account? <a href="Login.html">Login</a>
+    </div>
+  </div>  
+  
+  <script src="../assets/js/register_sk.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("skRegisterForm");
+    const passwordInput = document.getElementById("password");
+    const confirmInput = document.getElementById("confirm");
+
+    window.togglePassword = (fieldId, btn) => {
+        const input = document.getElementById(fieldId);
+        if (input.type === "password") {
+            input.type = "text";
+            btn.textContent = "Hide";
+        } else {
+            input.type = "password";
+            btn.textContent = "Show";
+        }
+    };
+
+    const municipalitySelect = document.getElementById("municipality");
+    const barangaySelect = document.getElementById("barangay");
+    const addressInput = document.getElementById("address");
+
+    function updateAddress() {
+        const municipality = municipalitySelect.value;
+        const barangay = barangaySelect.value;
+        let address = "";
+
+        if (barangay && municipality) address = `${barangay}, ${municipality}, Catanduanes`;
+        else if (municipality) address = `${municipality}, Catanduanes`;
+
+        addressInput.value = address;
+    }
+
+    municipalitySelect.addEventListener("change", updateAddress);
+    barangaySelect.addEventListener("change", updateAddress);
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        if (passwordInput.value !== confirmInput.value) {
+            return Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Passwords do not match!',
+            });
+        }
+
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch(form.action, {
+                method: "POST",
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (result.status === "success") {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: result.message
+                }).then(() => {
+                    form.reset();
+                    window.location.href = "Login.html"; 
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: result.message
+                });
+            }
+
+        } catch (err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Unexpected error occurred. Please try again.',
+            });
+            console.error(err);
+        }
+    });
+});
+</script>
+</body>
+</html>
+

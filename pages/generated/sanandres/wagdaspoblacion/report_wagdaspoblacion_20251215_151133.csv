@@ -1,0 +1,21 @@
+"YOUTH LIST - Wagdas (Poblacion), San Andres"
+ID,"First Name","Last Name",Email,Barangay,Municipality
+15,b,D,b@gmail.com,"Wagdas (Poblacion)","San Andres"
+
+"EVENTS - Wagdas (Poblacion), San Andres"
+"Event Name","Event Date",Category,Description
+"No event records found"
+
+"ATTENDANCE SUMMARY (Attended Only)"
+"Event Name","Total Attended"
+"No attendance data found"
+
+"REPORTS DATA"
+ID,"Event Name",Reason,Status,"Created At"
+"No reports found"
+
+"SUMMARY TOTALS"
+"Total Youth",1
+"Total Events",0
+"Events with Attendance",0
+"Total Reports",0
