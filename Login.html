@@ -4,17 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
-  <link id="themeStyle" rel="stylesheet" href="../assets/css/log.css">
+  <link id="themeStyle" rel="stylesheet" href="assets/css/log.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
   <button id="themeToggle" class="theme-toggle">🌙</button>
 
   <div class="login-box" id="login-box">
-    <img src="../assets/images/logo.png" alt="Logo">
+    <img src="assets/images/logo.png" alt="Logo">
     <h1>Login</h1>
 
-    <form id="loginForm" action="../auth/login.php" method="POST" novalidate>
+    <form id="loginForm" action="auth/login.php" method="POST" novalidate>
       <div class="input-box">
         <input type="email" id="loginEmail" name="email" placeholder="Email" required>
       </div>
@@ -30,7 +30,7 @@
         <label>
           <input type="checkbox" name="remember" id="remember"> Remember me
         </label>
-        <a href="../auth/forgot_password.php" class="forgot-link">Forgot Password?</a>
+        <a href="auth/forgot_password.php" class="forgot-link">Forgot Password?</a>
       </div>
 
   
@@ -38,11 +38,11 @@
     </form>
 
     <div class="register">
-      Don’t have an account? <a href="KkRegister.php">Register</a>
+      Don’t have an account? <a href="pages/KkRegister.php">Register</a>
     </div>
   </div>
 
-  <script src="../assets/js/log.js"></script>
+  <script src="assets/js/log.js"></script>
   <script>
 document.querySelector("#loginForm").addEventListener("submit", async function(e) {
     e.preventDefault();
@@ -75,3 +75,4 @@ document.querySelector("#loginForm").addEventListener("submit", async function(e
     </script>
 </body>
 </html>
+
